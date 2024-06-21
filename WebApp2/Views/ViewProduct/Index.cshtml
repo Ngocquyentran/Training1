@@ -1,0 +1,110 @@
+﻿@using WebApp2.Models
+@model IEnumerable<WebApp2.Models.Product>
+
+@{
+    Pager pagination = new Pager();
+    int pageNo = 0;
+    if(ViewBag.Pager !=null)
+    {
+        pagination = ViewBag.Pager;
+        pageNo = pagination.CurrentPage;
+    }
+}
+<div class="container">
+<h1>All Products</h1>
+
+<p>
+        <a asp-controller="View" asp-action="Create" class="btn" style="background-color:cadetblue; border:1p solid black; border-radius:5px">Create New Product</a>
+
+</p>
+</div>
+<div class="row">
+<table class="table" style="width: 100%;border-collapse: collapse;margin-top: 20px; border:1px solid black;">
+    <thead>
+        <tr>
+                <th style="border: 1px solid black;">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+                <th style="border: 1px solid black;">
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+                <th style="border: 1px solid black;">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+                <th style="border: 1px solid black;">
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+                <th style="border: 1px solid black;">
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+                <th style="border: 1px solid black;">
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+                <th style="border: 1px solid black;">
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr>
+            <td style="border: 1px solid black;">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+                    <td style="border: 1px solid black;">
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+                    <td style="border: 1px solid black;">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+                    <td style="border: 1px solid black;">
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+                    <td style="border: 1px solid black;">
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+                    <td style="border: 1px solid black;">
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+                    <td style="border: 1px solid black;">
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+        </tr>
+}
+    </tbody>
+    <tfoot>
+        <tr>
+                <td colspan="7" style="border: 1px solid black;">
+                    @if (pagination.TotalPages > 1)
+                    {
+                        <ul class="pagination justify-content-center" style="color:blue; font-weight:bold; border:1px red">
+                            <li class="page-item">
+                                <a class="page-link" asp-controller="View" asp-action="Index" asp-route-page="1">First</a>
+                            </li>
+                            @if (pagination.CurrentPage > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-controller="View" asp-action="Index" asp-route-page="@(pagination.CurrentPage - 1)">Previous</a>
+                                </li>
+                            }
+                            
+                            <li class="page-item">
+                                <a class="page-link" asp-controller="View" asp-action="Index" asp-route-page="@(pagination.CurrentPage)">Current</a>
+                            </li>
+                            @if (pagination.CurrentPage < pagination.EndPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-controller="View" asp-action="Index" asp-route-page="@(pagination.CurrentPage + 1)">Next</a>
+                                </li>
+                            }
+                            
+                            <li class="page-item">
+                                <a class="page-link" asp-controller="View" asp-action="Index" asp-route-page="@(pagination.TotalPages)">Last</a>
+                            </li>
+                        </ul>
+                    }
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
